@@ -1,6 +1,5 @@
 <?import javafx.scene.layout.GridPane?>
 
-<?import javafx.scene.text.Text?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.TextField?>
@@ -28,7 +27,7 @@
         <Button fx:id="buttonChooseFile" prefWidth="100" text="Wybierz plik..." GridPane.columnIndex="1" GridPane.rowIndex="0" />
         <Label fx:id="labelFilePath" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
-        <Button fx:id="buttonEncrypt" text="Szyfruj" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="Infinity"/>
+        <Button fx:id="buttonEncrypt" text="Szyfruj" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="Infinity" onAction="#handleEncryptClick"/>
 
         <GridPane GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.columnSpan="3">
             <rowConstraints>
@@ -53,19 +52,13 @@
         <Button fx:id="buttonDecrypt" text="Odszyfruj" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="Infinity"/>
 
         <GridPane GridPane.rowIndex="5" GridPane.rowSpan="2" GridPane.columnSpan="3">
-            <rowConstraints>
-                <RowConstraints percentHeight="50"/>
-                <RowConstraints percentHeight="50"/>
-            </rowConstraints>
             <columnConstraints>
                 <ColumnConstraints percentWidth="30"/>
                 <ColumnConstraints percentWidth="70" />
             </columnConstraints>
             <children>
-                <Label text="Odszyfrowany tekst (bajtowo): " GridPane.rowIndex="0"/>
-                <Label text="Odszyfrowany tekst: " GridPane.rowIndex="1"/>
-                <Label fx:id="labelByteDecodedText" text="..." GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                <Label fx:id="labelDecodedText" text="..." GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Odszyfrowany tekst: " GridPane.rowIndex="0"/>
+                <Label fx:id="labelDecodedText" text="..." GridPane.rowIndex="0" GridPane.columnIndex="1"/>
             </children>
         </GridPane>
     </children>
