@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -65,13 +67,19 @@ public class OneTimePadController {
     @FXML
     public void handleEncryptClick() {
         textToEncrypt = textFieldInput.getText();
+        
+        if (textToEncrypt.trim().length() < 1){
+            showErrorAlert("Nie podałeś tekstu do tłumaczenia");
+        } else {
+            bytesFromOrgText = textToEncrypt.getBytes(CHARSET);
+            key = generateKey(bytesFromOrgText.length);
+            cyphered = encryptText(bytesFromOrgText, key);
+            labelDecodedText.setText("");
 
-        bytesFromOrgText = textToEncrypt.getBytes(CHARSET);
-        key = generateKey(bytesFromOrgText.length);
-        cyphered = encryptText(bytesFromOrgText, key);
-        labelDecodedText.setText("");
+            printLabels();
+        }
 
-        printLabels();
+        
     }
 
     private byte[] encryptText(byte[] plainText, byte[] key) {
@@ -84,8 +92,12 @@ public class OneTimePadController {
 
     @FXML
     public void handleDecryptClick() {
-        byte[] decrypted = encryptText(cyphered, key);
-        labelDecodedText.setText(new String(decrypted, CHARSET));
+        if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0){
+            byte[] decrypted = encryptText(cyphered, key);
+            labelDecodedText.setText(new String(decrypted, CHARSET));
+        } else {
+            showErrorAlert("Nie możesz deszyfrować");
+        }
     }
 
     @FXML
@@ -126,5 +138,14 @@ public class OneTimePadController {
         } catch (IOException ex) {
             Logger.getLogger("readFile IOException");
         }
+    }
+
+    private void showErrorAlert(String errorMessage) {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Ostrzeżenie");
+        alert.setHeaderText("Sprawdź poprawność danych");
+        alert.setContentText(errorMessage);
+
+        alert.showAndWait();
     }
 }
