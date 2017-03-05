@@ -5,11 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
-import java.util.Arrays;
 
 /**
  * Created by szale_000 on 2017-03-04.
