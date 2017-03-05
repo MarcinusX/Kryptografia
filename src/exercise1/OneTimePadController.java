@@ -86,7 +86,6 @@ public class OneTimePadController {
     @FXML
     public void handleDecryptClick() {
         byte[] decrypted = encryptText(cyphered, key);
-
         labelDecodedText.setText(new String(decrypted, CHARSET));
     }
 
