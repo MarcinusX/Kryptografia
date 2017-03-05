@@ -50,7 +50,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="buttonChooseFile" mnemonicParsing="false" text="Wczytaj tekst do zaszyfrowania" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="buttonChooseFile" mnemonicParsing="false" onAction="#handleFileChoose" text="Wczytaj tekst do zaszyfrowania" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button fx:id="buttonEncrypt" mnemonicParsing="false" onAction="#handleEncryptClick" text="Szyfruj" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Button fx:id="buttonDecrypt" mnemonicParsing="false" onAction="#handleDecryptClick" text="Deszyfruj" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
          </children>

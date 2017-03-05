@@ -1,12 +1,19 @@
 package exercise1;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
+import java.util.logging.Logger;
 import javafx.scene.control.TextArea;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class OneTimePadController {
 
@@ -14,7 +21,6 @@ public class OneTimePadController {
 
     public TextArea textFieldInput;
     public Button buttonChooseFile;
-    public Label labelFilePath;
     public Button buttonEncrypt;
     public TextArea labelByteText;
     public TextArea labelByteTextHex;
@@ -24,7 +30,7 @@ public class OneTimePadController {
     public TextArea labelDecodedText;
 
     private String textToEncrypt;
-    
+
     private byte[] bytesFromOrgText;
     private byte[] key;
     private byte[] cyphered;
@@ -33,12 +39,12 @@ public class OneTimePadController {
         int i = b & 0xFF;
         String tmpHex = Integer.toHexString(i);
         String returnHex = "";
-        if (tmpHex.length() < 2){
+        if (tmpHex.length() < 2) {
             returnHex = "0" + tmpHex;
         } else {
             returnHex = tmpHex;
         }
-       
+
         return returnHex;
     }
 
@@ -50,25 +56,24 @@ public class OneTimePadController {
         return hexNumber;
     }
 
-    private void printLabels(){
+    private void printLabels() {
         labelByteTextHex.setText(printBytes(bytesFromOrgText));
         labelKey.setText(printBytes(key));
         labelCypherText.setText(printBytes(cyphered));
     }
-    
+
     @FXML
     public void handleEncryptClick() {
         textToEncrypt = textFieldInput.getText();
-        
+
         bytesFromOrgText = textToEncrypt.getBytes(CHARSET);
         key = generateKey(bytesFromOrgText.length);
         cyphered = encryptText(bytesFromOrgText, key);
         labelDecodedText.setText("");
-        
+
         printLabels();
     }
-    
-    
+
     private byte[] encryptText(byte[] plainText, byte[] key) {
         byte[] encryptedText = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++) {
@@ -83,8 +88,43 @@ public class OneTimePadController {
         labelDecodedText.setText(new String(decrypted, CHARSET));
     }
 
+    @FXML
+    public void handleFileChoose() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Wczytaj plik tekstowy do zaszyfrowania");
+        fileChooser.getExtensionFilters().addAll(
+                new ExtensionFilter("Pliki tekstowe", "*.txt"));
+        
+        File selectedFile = fileChooser.showOpenDialog(labelDecodedText.getScene().getWindow());
+        if (selectedFile != null) {
+            readFile(selectedFile);
+        }
+    }
+
     private byte[] generateKey(int length) {
         byte[] key = new SecureRandom().generateSeed(length);
         return key;
+    }
+
+    private void readFile(File selectedFile) {
+        
+        FileReader inputText = null;
+        try {
+            inputText = new FileReader(selectedFile.toString());
+            BufferedReader br = new BufferedReader(inputText);
+            
+            String fileContent = "";
+            String fileRead;
+            while ((fileRead = br.readLine()) != null) {
+                fileContent += fileRead;
+                fileContent += System.getProperty("line.separator");
+            }
+            textFieldInput.setText(fileContent);
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger("readFile FileNotFoundException");
+        } catch (IOException ex) {
+            Logger.getLogger("readFile IOException");
+        }
     }
 }
