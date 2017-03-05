@@ -3,28 +3,25 @@ package exercise1;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
+import javafx.scene.control.TextArea;
 
-/**
- * Created by szale_000 on 2017-03-04.
- */
 public class OneTimePadController {
 
     private static final Charset CHARSET = Charset.forName("UTF-8");
 
-    public TextField textFieldInput;
+    public TextArea textFieldInput;
     public Button buttonChooseFile;
     public Label labelFilePath;
     public Button buttonEncrypt;
-    public Label labelByteText;
-    public Label labelByteTextHex;
-    public Label labelKey;
-    public Label labelCypherText;
+    public TextArea labelByteText;
+    public TextArea labelByteTextHex;
+    public TextArea labelKey;
+    public TextArea labelCypherText;
     public Button buttonDecrypt;
-    public Label labelDecodedText;
+    public TextArea labelDecodedText;
 
     private String textToEncrypt;
     
@@ -54,7 +51,6 @@ public class OneTimePadController {
     }
 
     private void printLabels(){
-        labelByteText.setText(textToEncrypt);
         labelByteTextHex.setText(printBytes(bytesFromOrgText));
         labelKey.setText(printBytes(key));
         labelCypherText.setText(printBytes(cyphered));
@@ -63,10 +59,11 @@ public class OneTimePadController {
     @FXML
     public void handleEncryptClick() {
         textToEncrypt = textFieldInput.getText();
-
+        
         bytesFromOrgText = textToEncrypt.getBytes(CHARSET);
         key = generateKey(bytesFromOrgText.length);
         cyphered = encryptText(bytesFromOrgText, key);
+        labelDecodedText.setText("");
         
         printLabels();
     }
