@@ -3,9 +3,9 @@
 <GridPane fx:controller="exercise1.OneTimePadController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
     <columnConstraints>
-        <ColumnConstraints percentWidth="33.0"/>
-        <ColumnConstraints percentWidth="33.0"/>
-        <ColumnConstraints percentWidth="33.0"/>
+        <ColumnConstraints percentWidth="30.0"/>
+        <ColumnConstraints percentWidth="30.0"/>
+        <ColumnConstraints percentWidth="30.0"/>
     </columnConstraints>
     <rowConstraints>
         <RowConstraints percentHeight="15"/>
@@ -19,16 +19,17 @@
     </rowConstraints>
     <children>
         <TextField fx:id="textFieldInput" prefWidth="Infinity" GridPane.columnIndex="0" GridPane.rowIndex="0" promptText="Wpisz treść"/>
-        <Button fx:id="buttonChooseFile" prefWidth="100" text="Wybierz plik..." GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Button fx:id="buttonChooseFile" prefWidth="Infinity" text="Wybierz plik" GridPane.columnIndex="1"  GridPane.rowIndex="0" />
         <Label fx:id="labelFilePath" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-
+        
         <Button fx:id="buttonEncrypt" text="Szyfruj" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="Infinity" onAction="#handleEncryptClick"/>
-
+        
         <GridPane GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.columnSpan="3">
             <rowConstraints>
-                <RowConstraints percentHeight="33"/>
-                <RowConstraints percentHeight="33"/>
-                <RowConstraints percentHeight="33"/>
+                <RowConstraints percentHeight="25"/>
+                <RowConstraints percentHeight="25"/>
+                <RowConstraints percentHeight="25"/>
+                <RowConstraints percentHeight="25"/>
             </rowConstraints>
             <columnConstraints>
                 <ColumnConstraints percentWidth="30"/>
@@ -36,11 +37,13 @@
             </columnConstraints>
             <children>
                 <Label text="Tekst jawny: " GridPane.rowIndex="0"/>
-                <Label text="Wygenerowany klucz: " GridPane.rowIndex="1"/>
-                <Label text="Zaszyfrowany tekst: " GridPane.rowIndex="2"/>
-                <Label fx:id="labelByteText" text="..." GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                <Label fx:id="labelKey" text="..." GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                <Label fx:id="labelCypherText" text="..." GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Tekst jawny HEX: " GridPane.rowIndex="1"/>
+                <Label text="Wygenerowany klucz: " GridPane.rowIndex="2"/>
+                <Label text="Zaszyfrowany tekst: " GridPane.rowIndex="3"/>
+                <Label fx:id="labelByteText" text="" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label fx:id="labelByteTextHex" text="" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label fx:id="labelKey" text="" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label fx:id="labelCypherText" text="" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
             </children>
         </GridPane>
 
