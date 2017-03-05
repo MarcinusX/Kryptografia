@@ -1,3 +1,16 @@
+/*
+
+    KRYPTOGRAFIA - ZESTAW III
+        ZADANIE 1 - Szyfrowanie/deszyfrowanie danych wykorzystując algorytm
+            One-time pad
+
+        AUTORZY:
+            Krystian Szabat 195727
+            Marcin Szałek 195729
+            Monika Stobieniecka 195718
+
+*/
+
 package exercise1;
 
 import java.io.BufferedReader;
@@ -19,8 +32,10 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class OneTimePadController {
 
+    // Typ kodowania znaków używany przy dekodowaniu i kodowaniu tekstu
     private static final Charset CHARSET = Charset.forName("UTF-8");
 
+    // Zmienne związane z GUI
     public TextArea textFieldInput;
     public Button buttonChooseFile;
     public Button buttonEncrypt;
@@ -31,16 +46,27 @@ public class OneTimePadController {
     public Button buttonDecrypt;
     public TextArea labelDecodedText;
 
+    // Zmienna przechowujaca tekst do zaszyfrowania
     private String textToEncrypt;
 
+    
+    // Zmienne przechowujace bajtowa reprezentacje tekstu do zaszyfrowania, klucza i zaszyfrowanego
     private byte[] bytesFromOrgText;
     private byte[] key;
     private byte[] cyphered;
 
+    
+    /**
+     * Funkcja dokonujaca konwersji pomiedzy liczbą typu Byte do Stringa w formie HEX
+     * @param b Liczba do konwersji
+     * @return Wartosc liczby wyspisana w formie Hex
+     */
     public String byteToHex(byte b) {
         int i = b & 0xFF;
         String tmpHex = Integer.toHexString(i);
         String returnHex = "";
+        
+        // Skonwerowana liczba zawsze w dwoch znakach
         if (tmpHex.length() < 2) {
             returnHex = "0" + tmpHex;
         } else {
@@ -50,6 +76,11 @@ public class OneTimePadController {
         return returnHex;
     }
 
+    /**
+     * Funkcja wypisujaca tablice bajtow w postaci ciagu wartości hex
+     * @param array tablica byte z liczbami do konwersji
+     * @return Ciag znakow w postaci Hex
+     */
     public String printBytes(byte[] array) {
         String hexNumber = "";
         for (int k = 0; k < array.length; k++) {
@@ -58,12 +89,20 @@ public class OneTimePadController {
         return hexNumber;
     }
 
+    /**
+     * Wyswietlenie klucza, zaszyfrowanego tekstu i tekstu w Hex w GUI
+     */
     private void printLabels() {
         labelByteTextHex.setText(printBytes(bytesFromOrgText));
         labelKey.setText(printBytes(key));
         labelCypherText.setText(printBytes(cyphered));
     }
 
+    /**
+     * Handler do klikniecia na przycisk od szyfrowania
+     * Sprawdza poprawnosc danych, zarzadza wygenereowaniem klucza
+     * Zaszyfrowaniem tekstu
+     */
     @FXML
     public void handleEncryptClick() {
         textToEncrypt = textFieldInput.getText();
@@ -82,6 +121,12 @@ public class OneTimePadController {
         
     }
 
+    /**
+     * Szyfruje tekst, dokonujac operacji XOR na każdym bitów tekstu wejściowego i klucza
+     * @param plainText Tekst bazowy do szyfrowania/deszyfrowaniu
+     * @param key Klucz używany w szyfrowaniu/deszyfrowaniu
+     * @return Tablica byte z zaszyfrowanymi/deszyfrowanymi danymi
+     */
     private byte[] encryptText(byte[] plainText, byte[] key) {
         byte[] encryptedText = new byte[plainText.length];
         for (int i = 0; i < plainText.length; i++) {
@@ -90,6 +135,12 @@ public class OneTimePadController {
         return encryptedText;
     }
 
+    /**
+     * Handler do klikniecia na przycisk od deszyfrowania
+     * Sprawdza poprawnosc danych, zarzadza deszyfrowaniem danych
+     * Do deszyfrowania używa jako tekstu bazowego tekstu zaszyfrowanego
+     * i klucza wygenerowanego przy szyfrowaniu
+     */
     @FXML
     public void handleDecryptClick() {
         if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0){
@@ -100,6 +151,11 @@ public class OneTimePadController {
         }
     }
 
+    /**
+     * Handler do klikniecia na przycisk od wyboru pliku
+     * Otwiera okna do wyboru pliku tekstowego, po wybraniu pliku
+     * przekazuje kontrole do funkcji odczytujacej plik
+     */
     @FXML
     public void handleFileChoose() {
         FileChooser fileChooser = new FileChooser();
@@ -113,11 +169,21 @@ public class OneTimePadController {
         }
     }
 
+    /**
+     * Funkcja generujaca losowy klucz o podanej dlugosci
+     * @param length Pozadana dlugosc klucza do wygenerowania
+     * @return Tablica byte zawierajaca klucz
+     */
     private byte[] generateKey(int length) {
         byte[] key = new SecureRandom().generateSeed(length);
         return key;
     }
 
+    
+    /**
+     * Odczyt zawartosci pliku tekstowego wraz z wyswietleniem jej w GUI
+     * @param selectedFile wybrany plik w oknie wyboru
+     */
     private void readFile(File selectedFile) {
         
         FileReader inputText = null;
@@ -140,6 +206,10 @@ public class OneTimePadController {
         }
     }
 
+    /**
+     * Wyswietlenie okna z komunikatem bledu podanym przez uzytkownika
+     * @param errorMessage Komunikat bledu do wyswietlenia
+     */
     private void showErrorAlert(String errorMessage) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Ostrzeżenie");

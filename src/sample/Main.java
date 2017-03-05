@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+// Glowny plik projektu, uruchamia GUI i przekazuje kontrole do odpowiednich klas
 public class Main extends Application {
 
     @Override
