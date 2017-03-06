@@ -48,16 +48,12 @@ public class OneTimePadController {
     public Button buttonDecrypt;
     public TextArea labelDecodedText;
 
-    // Zmienna przechowujaca tekst do zaszyfrowania
-    private String textToEncrypt;
-
-    
     // Zmienne przechowujace bajtowa reprezentacje tekstu do zaszyfrowania, klucza i zaszyfrowanego
     private byte[] bytesFromOrgText;
     private byte[] key;
     private byte[] cyphered;
 
-    
+
     /**
      * Funkcja dokonujaca konwersji pomiedzy liczbą typu Byte do Stringa w formie HEX
      * @param b Liczba do konwersji
@@ -79,14 +75,11 @@ public class OneTimePadController {
     }
 
     private byte[] stringToBytes(String key){
-        String test = "c4 4d 4c cf 8e 8a 0c fc 43 f4";
-//        test.replaceAll("0x","");
         String[] arr = key.split(" ");
         byte[] bytes = new byte[arr.length];
         for(int i=0; i<arr.length; i++) {
             bytes[i] = (byte) Integer.parseInt(arr[i],16);
         }
-        //System.out.println(Arrays.toString(bytes));
         return bytes;
     }
 
@@ -119,7 +112,7 @@ public class OneTimePadController {
      */
     @FXML
     public void handleEncryptClick() {
-        textToEncrypt = textFieldInput.getText();
+        String textToEncrypt = textFieldInput.getText();
         //stringToBytes("sada");
 
         if (textToEncrypt.trim().length() < 1){
@@ -158,9 +151,9 @@ public class OneTimePadController {
      */
     @FXML
     public void handleDecryptClick() {
-        if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0){
-            cyphered = stringToBytes(labelCypherText.getText());
-            key = stringToBytes(labelKey.getText());
+        cyphered = stringToBytes(labelCypherText.getText());
+        key = stringToBytes(labelKey.getText());
+        if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0 && cyphered.length <= key.length){
             byte[] decrypted = encryptText(cyphered, key);
             labelDecodedText.setText(new String(decrypted, CHARSET));
         } else {
