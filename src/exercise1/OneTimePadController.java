@@ -23,6 +23,8 @@ import javafx.scene.control.Button;
 
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -66,7 +68,7 @@ public class OneTimePadController {
         String tmpHex = Integer.toHexString(i);
         String returnHex = "";
         
-        // Skonwerowana liczba zawsze w dwoch znakach
+        // Skonwertowana liczba zawsze w dwoch znakach
         if (tmpHex.length() < 2) {
             returnHex = "0" + tmpHex;
         } else {
@@ -74,6 +76,18 @@ public class OneTimePadController {
         }
 
         return returnHex;
+    }
+
+    private byte[] stringToBytes(String key){
+        String test = "c4 4d 4c cf 8e 8a 0c fc 43 f4";
+//        test.replaceAll("0x","");
+        String[] arr = key.split(" ");
+        byte[] bytes = new byte[arr.length];
+        for(int i=0; i<arr.length; i++) {
+            bytes[i] = (byte) Integer.parseInt(arr[i],16);
+        }
+        //System.out.println(Arrays.toString(bytes));
+        return bytes;
     }
 
     /**
@@ -84,7 +98,7 @@ public class OneTimePadController {
     public String printBytes(byte[] array) {
         String hexNumber = "";
         for (int k = 0; k < array.length; k++) {
-            hexNumber += "0x" + byteToHex(array[k]) + " ";
+            hexNumber += byteToHex(array[k]) + " ";
         }
         return hexNumber;
     }
@@ -106,7 +120,8 @@ public class OneTimePadController {
     @FXML
     public void handleEncryptClick() {
         textToEncrypt = textFieldInput.getText();
-        
+        //stringToBytes("sada");
+
         if (textToEncrypt.trim().length() < 1){
             showErrorAlert("Nie podałeś tekstu do tłumaczenia");
         } else {
@@ -144,6 +159,8 @@ public class OneTimePadController {
     @FXML
     public void handleDecryptClick() {
         if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0){
+            cyphered = stringToBytes(labelCypherText.getText());
+            key = stringToBytes(labelKey.getText());
             byte[] decrypted = encryptText(cyphered, key);
             labelDecodedText.setText(new String(decrypted, CHARSET));
         } else {
