@@ -74,6 +74,11 @@ public class OneTimePadController {
         return returnHex;
     }
 
+    /**
+     * Zamiana strina z ciagiem liczb w hex na tablice bajtow
+     * @param key String z liczbami hex oddzielonymi spacja
+     * @return Tablica bajtow
+     */
     private byte[] stringToBytes(String key){
         String[] arr = key.split(" ");
         byte[] bytes = new byte[arr.length];
@@ -153,7 +158,7 @@ public class OneTimePadController {
     public void handleDecryptClick() {
         cyphered = stringToBytes(labelCypherText.getText());
         key = stringToBytes(labelKey.getText());
-        if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0 && cyphered.length <= key.length){
+        if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0 && cyphered.length == key.length){
             byte[] decrypted = encryptText(cyphered, key);
             labelDecodedText.setText(new String(decrypted, CHARSET));
         } else {
