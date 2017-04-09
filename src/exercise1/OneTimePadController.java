@@ -13,24 +13,18 @@
 
 package exercise1;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-
-import java.nio.charset.Charset;
-import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import java.io.*;
+import java.nio.charset.Charset;
+import java.security.SecureRandom;
+import java.util.logging.Logger;
 
 public class OneTimePadController {
 
@@ -131,7 +125,6 @@ public class OneTimePadController {
             printLabels();
         }
 
-        
     }
 
     /**
