@@ -1,6 +1,9 @@
-import math
 import random
 from random import randrange
+
+
+def stringToBytes(message):
+    return bytearray(message, 'utf-8')
 
 
 # checks if number a satisfies rabin condition: a == 3 (mod 4)
@@ -75,14 +78,19 @@ def findPrivateKey():
         q = findRandomPrime()
         foundQ = checkIfSatisfyRabinPrivateKeyCondition(q)
 
-    return {'p': p, 'q': q}
+    return str(p), str(q)
+
+
+def findPublicKey(p, q):
+    return str(int(p) * int(q))
 
 
 # m - message
 # n = p * g - public key
 # returns encrypted message
 def encrypt(m, n):
-    return ((math.pow(m, 2)) % n)
+    m = getIntegerFromText(m)
+    return str(((pow(int(m), 2)) % int(n)))
 
 
 # returns g, x, y which safisfy equation px + qy = 1
@@ -96,8 +104,15 @@ def extendedEuclidAlgorithm(p, q):
 
 # returns computed four square roots, from which one is encrypted message
 def decrypt(p, q, c):
-    (g, x, y) = extendedEuclidAlgorithm(p, q)
+    p = int(p)
+    q = int(q)
     c = int(c)
+
+    print(p)
+    print(q)
+    print(c)
+
+    (g, x, y) = extendedEuclidAlgorithm(p, q)
 
     # calculates public key : n = p * q
     n = p * q
@@ -113,3 +128,20 @@ def decrypt(p, q, c):
     r4 = (-r2) % n
 
     return r1, r2, r3, r4
+
+
+def getIntegerFromText(message):
+    textToBytes = stringToBytes(message)
+    bytesToInt = int(str(textToBytes).encode('hex'), 16)
+
+    return str(bytesToInt)
+
+
+def main(message):
+    privateKey_p = privateKey['p']
+    privateKey_q = privateKey['q']
+
+    # print (bytesToInt)
+    bytesFromInt = str(bytesToInt).encode();
+
+    return (decrypt(privateKey_p, privateKey_q, encrypt(bytesToInt, privateKey_p * privateKey_q)))

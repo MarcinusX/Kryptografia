@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="exercise2.RabinAlgorithmController">
+          fx:controller="exercise1.OneTimePadController">
     <columnConstraints>
         <ColumnConstraints minWidth="10.0" percentWidth="50.0"/>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0"/>
@@ -49,10 +49,13 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <!--<Button fx:id="buttonChooseFile" mnemonicParsing="false" onAction="#handleFileChoose" text="Wczytaj tekst do zaszyfrowania" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />-->
+                <Button fx:id="buttonChooseFile" mnemonicParsing="false" onAction="#handleFileChoose"
+                        text="Wczytaj tekst do zaszyfrowania" GridPane.halignment="CENTER"
+                        GridPane.valignment="CENTER"/>
                 <Button fx:id="buttonEncrypt" mnemonicParsing="false" onAction="#handleEncryptClick" text="Szyfruj"
                         GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
-                <!--<Button fx:id="buttonDecrypt" mnemonicParsing="false" onAction="#handleDecryptClick" text="Deszyfruj" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />-->
+                <Button fx:id="buttonDecrypt" mnemonicParsing="false" onAction="#handleDecryptClick" text="Deszyfruj"
+                        GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER"/>
             </children>
         </GridPane>
         <Label text="Tekst do zaszyfrowania (Hex)" GridPane.halignment="CENTER" GridPane.rowIndex="3"

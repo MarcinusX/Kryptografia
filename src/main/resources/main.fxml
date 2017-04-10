@@ -1,24 +1,18 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.StackPane?>
 <StackPane fx:controller="sample.Controller"
            xmlns:fx="http://javafx.com/fxml" minHeight="800" minWidth="10000">
-    <TabPane >
+    <TabPane>
         <tabs>
             <Tab text="Zadanie 1">
                 <content>
-                    <fx:include fx:id="ex1Page" source="/exercise1/OneTimePadPage.fxml"/>
+                    <fx:include fx:id="ex1Page" source="/OneTimePadPage.fxml"/>
                 </content>
             </Tab>
             <Tab text="Zadanie 2">
                 <content>
-                    <fx:include fx:id="ex2Page" source="/exercise2/RabinAlgorithmPage.fxml"/>
+                    <fx:include fx:id="ex2Page" source="/RabinAlgorithmPage.fxml"/>
                 </content>
             </Tab>
         </tabs>

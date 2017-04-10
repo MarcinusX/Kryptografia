@@ -50,6 +50,7 @@ public class OneTimePadController {
 
     /**
      * Funkcja dokonujaca konwersji pomiedzy liczbą typu Byte do Stringa w formie HEX
+     *
      * @param b Liczba do konwersji
      * @return Wartosc liczby wyspisana w formie Hex
      */
@@ -57,7 +58,7 @@ public class OneTimePadController {
         int i = b & 0xFF;
         String tmpHex = Integer.toHexString(i);
         String returnHex = "";
-        
+
         // Skonwertowana liczba zawsze w dwoch znakach
         if (tmpHex.length() < 2) {
             returnHex = "0" + tmpHex;
@@ -70,20 +71,22 @@ public class OneTimePadController {
 
     /**
      * Zamiana strina z ciagiem liczb w hex na tablice bajtow
+     *
      * @param key String z liczbami hex oddzielonymi spacja
      * @return Tablica bajtow
      */
-    private byte[] stringToBytes(String key){
+    private byte[] stringToBytes(String key) {
         String[] arr = key.split(" ");
         byte[] bytes = new byte[arr.length];
-        for(int i=0; i<arr.length; i++) {
-            bytes[i] = (byte) Integer.parseInt(arr[i],16);
+        for (int i = 0; i < arr.length; i++) {
+            bytes[i] = (byte) Integer.parseInt(arr[i], 16);
         }
         return bytes;
     }
 
     /**
      * Funkcja wypisujaca tablice bajtow w postaci ciagu wartości hex
+     *
      * @param array tablica byte z liczbami do konwersji
      * @return Ciag znakow w postaci Hex
      */
@@ -114,7 +117,7 @@ public class OneTimePadController {
         String textToEncrypt = textFieldInput.getText();
         //stringToBytes("sada");
 
-        if (textToEncrypt.trim().length() < 1){
+        if (textToEncrypt.trim().length() < 1) {
             showErrorAlert("Nie podałeś tekstu do tłumaczenia");
         } else {
             bytesFromOrgText = textToEncrypt.getBytes(CHARSET);
@@ -129,8 +132,9 @@ public class OneTimePadController {
 
     /**
      * Szyfruje tekst, dokonujac operacji XOR na każdym bitów tekstu wejściowego i klucza
+     *
      * @param plainText Tekst bazowy do szyfrowania/deszyfrowaniu
-     * @param key Klucz używany w szyfrowaniu/deszyfrowaniu
+     * @param key       Klucz używany w szyfrowaniu/deszyfrowaniu
      * @return Tablica byte z zaszyfrowanymi/deszyfrowanymi danymi
      */
     private byte[] encryptText(byte[] plainText, byte[] key) {
@@ -151,7 +155,7 @@ public class OneTimePadController {
     public void handleDecryptClick() {
         cyphered = stringToBytes(labelCypherText.getText());
         key = stringToBytes(labelKey.getText());
-        if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0 && cyphered.length == key.length){
+        if (cyphered != null && key != null && cyphered.length > 0 && key.length > 0 && cyphered.length == key.length) {
             byte[] decrypted = encryptText(cyphered, key);
             labelDecodedText.setText(new String(decrypted, CHARSET));
         } else {
@@ -170,7 +174,7 @@ public class OneTimePadController {
         fileChooser.setTitle("Wczytaj plik tekstowy do zaszyfrowania");
         fileChooser.getExtensionFilters().addAll(
                 new ExtensionFilter("Pliki tekstowe", "*.txt"));
-        
+
         File selectedFile = fileChooser.showOpenDialog(labelDecodedText.getScene().getWindow());
         if (selectedFile != null) {
             readFile(selectedFile);
@@ -179,6 +183,7 @@ public class OneTimePadController {
 
     /**
      * Funkcja generujaca losowy klucz o podanej dlugosci
+     *
      * @param length Pozadana dlugosc klucza do wygenerowania
      * @return Tablica byte zawierajaca klucz
      */
@@ -187,18 +192,19 @@ public class OneTimePadController {
         return key;
     }
 
-    
+
     /**
      * Odczyt zawartosci pliku tekstowego wraz z wyswietleniem jej w GUI
+     *
      * @param selectedFile wybrany plik w oknie wyboru
      */
     private void readFile(File selectedFile) {
-        
+
         FileReader inputText = null;
         try {
             inputText = new FileReader(selectedFile.toString());
             BufferedReader br = new BufferedReader(inputText);
-            
+
             String fileContent = "";
             String fileRead;
             while ((fileRead = br.readLine()) != null) {
@@ -206,7 +212,7 @@ public class OneTimePadController {
                 fileContent += System.getProperty("line.separator");
             }
             textFieldInput.setText(fileContent);
-            
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger("readFile FileNotFoundException");
         } catch (IOException ex) {
@@ -216,6 +222,7 @@ public class OneTimePadController {
 
     /**
      * Wyswietlenie okna z komunikatem bledu podanym przez uzytkownika
+     *
      * @param errorMessage Komunikat bledu do wyswietlenia
      */
     private void showErrorAlert(String errorMessage) {
