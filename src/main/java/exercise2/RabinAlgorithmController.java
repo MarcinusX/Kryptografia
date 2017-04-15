@@ -45,6 +45,7 @@ public class RabinAlgorithmController {
         final String textToEncrypt = plainTextTextarea.getText();
         interpreter.execfile("rabin.py");
         calculateTextToInteger();
+        calculateIntegerToText(plainTextIntegerTextarea.getText());
         findPrivateKey();
         findPublicKey();
         encrypt();
@@ -64,12 +65,14 @@ public class RabinAlgorithmController {
     }
 
     private void calculateTextToInteger() {
-        PyObject integerFromText = interpreter.get("getIntegerFromText");
-        PyObject integerFromTextResult = integerFromText.__call__(
-                new PyString(plainTextTextarea.getText())
-        );
-
-        plainTextIntegerTextarea.setText((String) integerFromTextResult.__tojava__(String.class));
+//        PyObject integerFromText = interpreter.get("getIntegerFromText");
+//        PyObject integerFromTextResult = integerFromText.__call__(
+//                new PyString(plainTextTextarea.getText())
+//        );
+        String intMsg = convertTextToInteger(plainTextTextarea.getText());
+        System.out.println("SKONWERTOWNE" + convertIntegerToText(intMsg));
+//        plainTextIntegerTextarea.setText((String) integerFromTextResult.__tojava__(String.class));
+        plainTextIntegerTextarea.setText(intMsg);
     }
 
     private void findPrivateKey() {
@@ -91,10 +94,45 @@ public class RabinAlgorithmController {
         publicKeyTextarea.setText((String) publicKeyResult.__tojava__(String.class));
     }
 
+    private void calculateIntegerToText(String message) {
+        PyObject textFromInteger = interpreter.get("getTextFromInteger");
+        PyObject textFromIntegerResult = textFromInteger.__call__(
+                new PyString(message)
+        );
+        System.out.println("text from integer " + (String) textFromIntegerResult.__tojava__(String.class));
+    }
+
+    private String convertTextToInteger(String text) {
+        char[] chars = text.toCharArray();
+        String result = "1";
+        for (char c :
+                chars) {
+            String valueAsString = Integer.toString((int) c);
+            while (valueAsString.length() < 3) {
+                valueAsString = "0" + valueAsString;
+            }
+            result += valueAsString;
+        }
+        return result;
+    }
+
+    private String convertIntegerToText(String integer) {
+        integer = integer.substring(1);
+        String result = "";
+        for (int i = 0; i < integer.length(); i += 3) {
+            String stringValue = integer.substring(i, i + 3);
+            int intValue = Integer.valueOf(stringValue);
+            char c = (char) intValue;
+            result += c;
+        }
+        return result;
+    }
+
+
     private void encrypt() {
         PyObject encryptMessage = interpreter.get("encrypt");
         PyObject encryptedMessageResult = encryptMessage.__call__(
-                new PyString(plainTextTextarea.getText()),
+                new PyString(plainTextIntegerTextarea.getText()),
                 new PyString(publicKeyTextarea.getText())
         );
 

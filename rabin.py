@@ -8,16 +8,13 @@ def stringToBytes(message):
 
 # checks if number a satisfies rabin condition: a == 3 (mod 4)
 def checkIfSatisfyRabinPrivateKeyCondition(a):
-    if a % 4 == 3:
-        return True
-    else:
-        return False
+    return a % 4 == 3
 
 
 # returns random prime number from range (10000, 100000)
 def findRandomPrime():
     while True:
-        n = random.randint(10000000, 10000000000)
+        n = long(random.randint(10000000, 10000000000))
         if n % 2 == 0:
             continue
 
@@ -65,8 +62,8 @@ def millerRabinPrimalityTest(n, k=10):
 
 # finds private key: p and q numbers
 def findPrivateKey():
-    p = 0
-    q = 0
+    p = 0L
+    q = 0L
     foundP = False
     foundQ = False
 
@@ -82,21 +79,20 @@ def findPrivateKey():
 
 
 def findPublicKey(p, q):
-    return str(int(p) * int(q))
+    return str(long(p) * long(q))
 
 
 # m - message
 # n = p * g - public key
 # returns encrypted message
 def encrypt(m, n):
-    m = getIntegerFromText(m)
-    return str(((pow(int(m), 2)) % int(n)))
+    return str(((pow(long(m), 2L)) % long(n)))
 
 
 # returns g, x, y which safisfy equation px + qy = 1
 def extendedEuclidAlgorithm(p, q):
     if p == 0:
-        return (q, 0, 1)
+        return (q, 0L, 1L)
     else:
         g, y, x = extendedEuclidAlgorithm(q % p, p)
         return (g, x - (q // p) * y, y)
@@ -104,38 +100,64 @@ def extendedEuclidAlgorithm(p, q):
 
 # returns computed four square roots, from which one is encrypted message
 def decrypt(p, q, c):
-    p = int(p)
-    q = int(q)
-    c = int(c)
+    p = long(p)
+    q = long(q)
+    c = long(c)
 
     print(p)
     print(q)
     print(c)
 
     (g, x, y) = extendedEuclidAlgorithm(p, q)
+    print("g" + str(g))
+    print("x" + str(x))
+    print("c" + str(y))
 
     # calculates public key : n = p * q
     n = p * q
+    print("c " + str(c))
+    print("p " + str(p))
+    print("q " + str(q))
 
     # computes square roots: m_p = c^(1/4 *(p + 1)), m_q = c^(1/4 *(q + 1))
-    m_p = (pow(c, ((p + 1) // 4), p))
-    m_q = (pow(c, ((q + 1) // 4), q))
+    print(pow(c, ((p + 1) // 4), p));
+    print(pow(c, ((p + 1L) // 4L), p));
+
+    m_p = long(pow(c, ((p + 1L) // 4L), p))
+    m_q = long(pow(c, ((q + 1L) // 4L), q))
+
+    print("m_p " + str(m_p))
+    print("m_q " + str(m_q))
 
     # calculates four square roots by using Chinese remainder theorem
-    r1 = ((x * p * m_q) + (y * q * m_p)) % n
-    r2 = ((x * p * m_q) - (y * q * m_p)) % n
-    r3 = (-r1) % n
-    r4 = (-r2) % n
+    r1 = (long(x * p * m_q) + long(y * q * m_p)) % n
+    r2 = (long(x * p * m_q) - long(y * q * m_p)) % n
+    r3 = long(-r1) % n
+    r4 = long(-r2) % n
+
+    print(r1)
+    print(r2)
+    print(r3)
+    print(r4)
 
     return r1, r2, r3, r4
 
 
 def getIntegerFromText(message):
     textToBytes = stringToBytes(message)
-    bytesToInt = int(str(textToBytes).encode('hex'), 16)
+    print(textToBytes)
+    bytesToLong = long(str(textToBytes).encode('utf-8'), 16)
 
     return str(bytesToInt)
 
+
+def getTextFromInteger(message):
+    strToInt = int(message)
+    intToBytes = bytes(strToInt)
+    print(intToBytes)
+    result = intToBytes.decode('utf-8')
+
+    return result
 
 def main(message):
     privateKey_p = privateKey['p']
