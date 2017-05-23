@@ -47,11 +47,16 @@ public class RabinAlgorithmController {
     }
 
     @FXML
-    public void handleEncryptClick() {
-        final String textToEncrypt = plainTextTextarea.getText();
+    public void convertTextToNumber() {
         interpreter.execfile("rabin.py");
         calculateTextToInteger();
-        calculateIntegerToText(plainTextIntegerTextarea.getText());
+    }
+
+    @FXML
+    public void handleEncryptClick() {
+        interpreter.execfile("rabin.py");
+//        calculateTextToInteger();
+//        calculateIntegerToText(plainTextIntegerTextarea.getText());
         findPrivateKey();
         findPublicKey();
         encrypt();

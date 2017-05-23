@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="exercise3.ElGamalAlgorithmController">
+    <columnConstraints>
+        <ColumnConstraints minWidth="10.0" percentWidth="50.0"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="46.0" valignment="TOP" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="190.0" minHeight="0.0" prefHeight="36.0" valignment="TOP" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="267.0" minHeight="0.0" prefHeight="48.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="30.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="30.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="30.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="30.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="30.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+
+    </rowConstraints>
+    <children>
+        <Label alignment="CENTER" text="Generowanie podpisu cyfrowego wykorzystując algorytm Elgamala"
+               GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <font>
+                <Font name="System Bold" size="16.0"/>
+            </font>
+        </Label>
+        <Label text="Wiadomość" GridPane.rowIndex="1">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <TextArea fx:id="plainTextTextarea" prefHeight="50" prefWidth="308.0" wrapText="true" GridPane.rowIndex="2"/>
+        <Label text="Akcje" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Button fx:id="buttonChooseFile" mnemonicParsing="false" onAction="#handleFileChoose"
+                        text="Wczytaj tekst do zaszyfrowania" GridPane.halignment="CENTER"
+                        GridPane.valignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Button fx:id="btnGenerateSignature" mnemonicParsing="false" onAction="#generateSignatureHandler"
+                        text="Generuj podpis cyfrowy" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Button fx:id="btnVerifySignature" mnemonicParsing="false" onAction="#verifySignatureHandler"
+                        text="Weryfikuj podpis"
+                        GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            </children>
+        </GridPane>
+        <Label text="Wiadomość zahashowana funkcją SHA1" GridPane.rowIndex="3" GridPane.columnIndex="0">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <TextArea fx:id="hashedMessageLabel" GridPane.rowIndex="4" GridPane.columnIndex="0" wrapText="true"
+                  editable="false">
+        </TextArea>
+        <Label text="Klucz publiczny - b" GridPane.columnIndex="1"
+               GridPane.rowIndex="3">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <TextArea fx:id="publicKeyValueB" GridPane.columnIndex="1" GridPane.rowIndex="4" wrapText="true"
+                  editable="false">
+        </TextArea>
+        <Label text="Klucz publiczny/prywatny - p" GridPane.columnIndex="0"
+               GridPane.rowIndex="5">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <TextArea fx:id="keyValueP" GridPane.columnIndex="0" GridPane.rowIndex="6" wrapText="true" editable="false">
+        </TextArea>
+        <Label text="Klucz publiczny/prywatny - g" GridPane.columnIndex="1"
+               GridPane.rowIndex="5">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <TextArea fx:id="keyValueG" GridPane.columnIndex="1" GridPane.rowIndex="6" wrapText="true" editable="false">
+        </TextArea>
+        <Label text="Klucz prywatny - a" GridPane.columnIndex="0"
+               GridPane.rowIndex="7">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <TextArea fx:id="privateKeyValueA" GridPane.columnIndex="0" wrapText="true" GridPane.rowIndex="8"
+                  editable="false"/>
+
+        <Label text="Podpis cyfrowy - r" GridPane.rowIndex="9" GridPane.columnIndex="0">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <Label text="Podpis cyfrowy - s" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <TextArea fx:id="digitalSignatureValueR" GridPane.rowIndex="10" wrapText="true"/>
+        <TextArea fx:id="digitalSignatureValueS" GridPane.columnIndex="1"
+                  GridPane.rowIndex="10" wrapText="true"/>
+        <Label text="Zweryfikowano podpis" GridPane.columnIndex="0" GridPane.rowIndex="11">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </Label>
+        <Label fx:id="isVerifiedSignatureText" GridPane.columnIndex="1" GridPane.rowIndex="11">
+        </Label>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+</GridPane>

@@ -14,7 +14,7 @@ def checkIfSatisfyRabinPrivateKeyCondition(a):
 # returns random prime number from specified range
 def findRandomPrime(maxValue):
     while True:
-        n = long(random.randint(maxValue / 10, maxValue))
+        n = long(random.randint(maxValue / 20, maxValue / 2))
         if n % 2 == 0:
             continue
 
@@ -104,6 +104,13 @@ def extendedEuclidAlgorithm(p, q):
         return (g, x - (q // p) * y, y)
 
 
+def xgcd(b, n):
+    x0, x1, y0, y1 = 1, 0, 0, 1
+    while n != 0:
+        q, b, n = b // n, n, b % n
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+    return b, x0, y0
 # def xgcd(a, b):
 #     if a == 0: return 0, 1, b
 #     if b == 0: return 1, 0, a
@@ -130,7 +137,7 @@ def decrypt(p, q, c, b01):
     b1 = b01[1:]
 
     # calculates extended euclid algorithm
-    (g, x, y) = extendedEuclidAlgorithm(p, q)
+    (g, x, y) = xgcd(p, q)
 
     # calculates public key : n = p * q
     n = p * q

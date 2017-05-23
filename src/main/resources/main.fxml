@@ -15,6 +15,11 @@
                     <fx:include fx:id="ex2Page" source="/RabinAlgorithmPage.fxml"/>
                 </content>
             </Tab>
+            <Tab text="Zadanie 3">
+                <content>
+                    <fx:include fx:id="ex3Page" source="/ElgamalAlgorithmPage.fxml"/>
+                </content>
+            </Tab>
         </tabs>
     </TabPane>
 </StackPane>
